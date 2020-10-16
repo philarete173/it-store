@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="{{ url_for('static', filename='js/rows.js') }}"></script>
+<h1>Add data about {{ type }} to DB</h1>
+<form action="" method="post">
+{% if type == 'cartridge' %}
+    <p>
+      {{ form.cartridge_model.label }} : {{ form.cartridge_model }}
+      {% for error in form.cartridge_model.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.color.label }} : {{ form.color }}
+      {% for error in form.color.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+  {% endif %}
+  {% if type == 'printer' %}
+    <p>
+      {{ form.brand.label }} : {{ form.brand }}
+      {% for error in form.brand.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.printer_model.label }} : {{ form.printer_model }}
+      {% for error in form.printer_model.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <div data-toggle="fieldset" id="cartridge_fieldset">
+        {{ form.cartridges.label}} : <button type="button" data-toggle="fieldset-add-row" data-target="#cartridge_fieldset">+</button>
+        <table>
+          {% for cartridge in form.cartridges %}
+          <tr data-toggle="fieldset-entry">
+            <td>
+              {{ cartridge }}
+            </td>
+            <td>
+              <button type="button" data-toggle="fieldset-remove-row" id="cartridge-{{loop.index0}}-remove">-</button>
+            </td>
+            <td>
+              {% for error in cartridge.errors %}
+              <span style="color: red;">{{ error }}</span>
+              {% endfor %}
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+      </div>
+  {% endif %}
+  {% if type == 'office' %}
+    <p>
+      {{ form.name.label }} : {{ form.name }}
+      {% for error in form.name.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.place.label }} : {{ form.place }}
+      {% for error in form.place.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <div data-toggle="fieldset" id="printers_fieldset">
+        {{ form.printers.label}} : <button type="button" data-toggle="fieldset-add-row" data-target="#printers_fieldset">+</button>
+        <table>
+          {% for printer in form.printers %}
+          <tr data-toggle="fieldset-entry">
+            <td>
+              {{ printer }}
+            </td>
+            <td>
+              <button type="button" data-toggle="fieldset-remove-row" id="printer-{{loop.index0}}-remove">-</button>
+            </td>
+            <td>
+              {% for error in printer.errors %}
+              <span style="color: red;">{{ error }}</span>
+              {% endfor %}
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+      </div>
+  {% endif %}
+  <p>
+    {{ form.hidden_tag() }}
+    {{ form.submit() }}
+  </p>
+</form>
+
+
+{% endblock %}

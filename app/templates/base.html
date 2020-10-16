@@ -1,0 +1,40 @@
+{% extends "bootstrap/base.html" %}
+  {% block title %}
+    {% if title %}
+      {{ title }} - IT Store
+    {% else %}
+      IT Store
+    {% endif %}
+  {% endblock %}
+  {% block navbar %}
+    <div class="navbar navbar-default" role="navigation">
+      <a class="navbar-brand" href="{{url_for('index')}}">IT Store</a>
+      <ul class="nav navbar-nav">
+        {% if current_user.is_anonymous %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% else %}<li></li>
+          <li><a href="{{url_for('add')}}">Add Data</a></li>
+          {% if current_user.has_role('Admin') %}
+          <li><a href="{{url_for('admin.index')}}">Admin Panel</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('logout') }}">Logout {{ current_user.username }}</a></li>
+      {% endif %}
+    </ul>
+    </div>
+  {% endblock %}
+  {%block content%}
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+    {% block app_content %}{% endblock %}
+    </div>
+  {%endblock%}

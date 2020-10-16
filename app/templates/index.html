@@ -1,0 +1,61 @@
+{%extends "base.html"%}
+
+{%block app_content%}
+  <p><h1><b>Cartridge Stock</b></h1> {% if not current_user.is_anonymous %}<button type="button" onclick="location.href='{{ url_for('cartridgestock')}}'">+</button>{% endif %}</p>
+  <p><b>Current in stock:</b></p>
+  <table width="100%">
+    {% for cartridge in cartridges_amount %}
+      <td>{{ cartridge.model }}: {% if cartridge.amount > 10 %}<font color="green">{{ cartridge.amount }}</font>{% elif 5 < cartridge.amount < 10 %}<font color="yellow">{{ cartridge.amount }}</font>{% elif cartridge.amount < 5 %}<font color="red">{{ cartridge.amount }}</font>{% endif %}</td>
+    {% endfor %}
+  </table>
+  <br>
+  <table class="table table-striped" width="100%">
+    <tr>
+      <td style="width:100px">Date</td>
+      <td style="width:150px">Place</td>
+      <td style="width:150px">Office</td>
+      <td style="width:100px">Cartridge</td>
+      <td>In/Out</td>
+      <td>Amount</td>
+    </tr>
+    {% for record in cartridge_stock %}
+      <tr>
+        <td>{{ record.date.strftime('%d.%m.%Y %H:%M') }}</td>
+        <td>{{ record.place }}</td>
+        <td>{{ record.office }}</td>
+        <td>{{ record.cartridge }}</td>
+        <td>{% if record.in_out == True %}In{% elif record.in_out == False %}Out{% endif %}</td>
+        <td>{{ record.amount }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <br>
+  <p><h1><b>Printer Stock</b></h1> {% if not current_user.is_anonymous %}<button type="button" onclick="location.href='{{ url_for('printerstock')}}'">+</button>{% endif %}</p>
+  <p><b>Current in stock:</b></p>
+  <table width="100%">
+    {% for printer in printers_amount %}
+      <td>{{ printer.model }}: {% if printer.amount > 2 %}<font color="green">{{ printer.amount }}</font>{% elif printer.amount == 2 %}<font color="yellow">{{ printer.amount }}</font>{% elif printer.amount < 2 %}<font color="red">{{ printer.amount }}</font>{% endif %}</td></td>
+    {% endfor %}
+  </table>
+  <br>
+  <table class="table table-striped" width="100%">
+    <tr>
+      <td style="width:100px">Date</td>
+      <td style="width:150px">Place</td>
+      <td style="width:150px">Office</td>
+      <td style="width:100px">Printer</td>
+      <td>In/Out</td>
+      <td>Amount</td>
+    </tr>
+    {% for record in printer_stock %}
+      <tr>
+        <td>{{ record.date.strftime('%d.%m.%Y %H:%M') }}</td>
+        <td>{{ record.place }}</td>
+        <td>{{ record.office }}</td>
+        <td>{{ record.printer }}</td>
+        <td>{% if record.in_out == True %}In{% elif record.in_out == False %}Out{% endif %}</td>
+        <td>{{ record.amount }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{%endblock%}

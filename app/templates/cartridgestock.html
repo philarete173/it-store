@@ -1,0 +1,33 @@
+{%extends "base.html"%}
+
+{% block app_content %}
+  <h1>Add record to Cartridge Stock</h1>
+  <form action="" method="post">
+    <p>
+      {{ form.office.label }} : {{ form.office }}
+      {% for error in form.office.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.cartridge.label }} : {{ form.cartridge }}
+      {% for error in form.cartridge.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.in_out.label }} : {{ form.in_out}}
+      {% for error in form.in_out.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.amount.label }} : {{ form.amount }}
+      {% for error in form.amount.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    {{ form.hidden_tag() }}
+    <p>{{ form.submit() }}</p>
+  </form>
+{% endblock %}
